@@ -5,8 +5,8 @@ const state = {
 }
 
 module.exports.connect = (done) => {
-    const url = 'mongodb://localhost:27017';
-    // const url = 'mongodb+srv://Anandhu:2FUNEsUNO0KM4nLF@cluster0.31tlqs5.mongodb.net/?retryWrites=true&w=majority';
+    // const url = 'mongodb://localhost:27017';
+    const url = 'mongodb+srv://Anandhu:2FUNEsUNO0KM4nLF@cluster0.31tlqs5.mongodb.net/?retryWrites=true&w=majority';
     const dbname = 'elecxo';
 
     mongoClient.connect(url, (err, data) => {
