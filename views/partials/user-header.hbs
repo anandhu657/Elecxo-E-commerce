@@ -1,0 +1,304 @@
+{{!-- <nav class="navbar navbar-expand-lg sticky-top " style="background-color: #ffffff;">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+            data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <div class="navbar-collapse d-flex justify-content-center mt-2" id="navbarSupportedContent">
+            <a class="navbar-brand mt-2 mt-lg-0" href="#">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4XmKtIVq4sAjVsnbf7Z8EfNhg9IHxi5zScg&usqp=CAU"
+                    height="15" alt="MDB Logo" loading="lazy" />
+            </a>
+            <a class="text-reset me-3 btn" style="background-color: #F1F0F0;" href="/">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-house-door-fill" viewBox="0 0 16 16">
+                    <path
+                        d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5z" />
+                </svg>
+            </a>
+            <div class="d-flex align-items-center">
+                <form action="/search" class="form-inline me-3" method="get">
+                    <input class="form-control" name="search" type="search" placeholder="Search" aria-label="Search"
+                        style="width: 70vw;">
+                    <input type="hidden" value="submit">
+                </form>
+                {{#if user}}
+                <a class="text-reset me-3 btn" style="background-color: #F1F0F0;" href="/profile">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-person" viewBox="0 0 16 16">
+                        <path
+                            d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
+                    </svg>
+                </a>
+                {{else}}
+                <button type="button" class="me-3 btn" data-bs-toggle="modal" style="background-color: #F1F0F0;"
+                    data-bs-target="#signinForm">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-person" viewBox="0 0 16 16">
+                        <path
+                            d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
+                    </svg>
+                </button>
+                {{/if}}
+                {{#if user}}
+                <a class="text-reset me-3 btn" style="background-color: #F1F0F0;" href="/wishlist">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-heart" viewBox="0 0 16 16">
+                        <path
+                            d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
+                    </svg>
+                </a>
+                {{else}}
+                <button type="button" class="me-3 btn" data-bs-toggle="modal" style="background-color: #F1F0F0;"
+                    data-bs-target="#signinForm">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-heart" viewBox="0 0 16 16">
+                        <path
+                            d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z" />
+                    </svg>
+                </button>
+                {{/if}}
+                <div>
+                    {{#if user}}
+                    <a class="text-reset me-3 btn position-relative" style="background-color: #F1F0F0;" href="/cart">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-cart3" viewBox="0 0 16 16">
+                            <path
+                                d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                        </svg>
+                        <span class="badge badge-dark position-absolute"
+                            style="color: white; background-color: green;">{{cartCount}}</span>
+                    </a>
+                    {{else}}
+                    <button type="button" class="me-3 btn" data-bs-toggle="modal" style="background-color: #F1F0F0;"
+                        data-bs-target="#signinForm">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-cart3" viewBox="0 0 16 16">
+                            <path
+                                d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                        </svg>
+                    </button>
+                    {{/if}}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</nav>
+--}}
+
+
+<header class="header shadow bg-white" style="position: sticky; top: 0; z-index: 1000;">
+    <div class="px-lg-5 px-sm-5">
+        <nav class="navbar navbar-expand-lg navbar-light py-3 px-lg-0"><a class="navbar-brand" href="index.html"><span
+                    class="fw-bold text-uppercase text-dark">ElecXo</span></a>
+            <button class="navbar-toggler navbar-toggler-end" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <!-- Link--><a class="nav-link active" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- Link--><a class="nav-link" href="">Shop</a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- Link--><a class="nav-link" href="">Product detail</a>
+                    </li>
+
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <form action="/search" class="form-inline me-3" method="get">
+                            <input class="form-control" name="search" type="search" placeholder="Search"
+                                aria-label="Search">
+                        </form>
+                    </li>
+                    {{#if user}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/cart">
+                            <i class="fas fa-dolly-flatbed me-1 text-gray"></i>Cart
+                            <small class="text-gray fw-normal">(<span id="cart-count">{{cartCount}}</span>)</small>
+                        </a>
+                    </li>
+                    {{else}}
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="modal" data-bs-target="#signinForm">
+                            <i class="fas fa-dolly-flatbed me-1 text-gray"></i>Cart<small
+                                class="text-gray fw-normal"></small>
+                        </a>
+                    </li>
+                    {{/if}}
+                    {{#if user}}
+                    <li class="nav-item"><a class="nav-link" href="/wishlist"> <i class="far fa-heart me-1"></i><small
+                                class="text-gray fw-normal"></small></a></li>
+                    {{else}}
+                    <li class="nav-item">
+                        <a data-bs-toggle="modal" data-bs-target="#signinForm" class="nav-link" href="/wishlist">
+                            <i class="far fa-heart me-1"></i><small class="text-gray fw-normal"></small>
+                        </a>
+                    </li>
+                    {{/if}}
+                    {{#if user}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile">
+                            <i class="fas fa-user me-1 text-gray fw-normal"></i>{{user.username}}
+                        </a>
+                    </li>
+                    {{else}}
+                    <li class="nav-item">
+                        <a data-bs-toggle="modal" data-bs-target="#signinForm" class="nav-link">
+                            <i class="fas fa-user me-1 text-gray fw-normal"></i>Login
+                        </a>
+                    </li>
+                    {{/if}}
+                </ul>
+            </div>
+        </nav>
+    </div>
+</header>
+
+{{#if logout}}
+<div class="modal fade" id="signinForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="signinFormLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="signinFormLabel">User SignIn</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="">
+                    <div class="">
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
+                            class="img-fluid" alt="Sample image">
+                    </div>
+                    <div class="mt-4">
+                        <form class="mx-1 mx-md-4" method="post" id="login-form">
+
+                            <div class="invalid-feedback ms-5 d-block">
+                            </div>
+                            <div class="d-flex flex-row align-items-center mb-4">
+                                <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                                <div class="form-outline flex-fill mb-0">
+                                    <input type="email" id="email" class="form-control" name="email"
+                                        placeholder="Email" />
+                                </div>
+                            </div>
+
+                            <div class="invalid-feedback ms-5 d-block">
+                            </div>
+                            <div class="d-flex flex-row align-items-center mb-4">
+                                <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                                <div class="form-outline flex-fill mb-0">
+                                    <input type="password" id="pass" class="form-control" name="password"
+                                        placeholder="Password" />
+                                </div>
+                            </div>
+                            <div class="ms-5">
+                                Not an elecxo member ?
+                                <button type="button" class="bg-body border-0" data-bs-toggle="modal"
+                                    data-bs-target="#signupForm">
+                                    Sign Up
+                                </button>
+                            </div>
+                            <div class="d-flex justify-content-center mx-4 mt-3 mb-3 mb-lg-4">
+                                <button type="submit" class="btn btn-primary btn-lg">Sign in</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="signupForm" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="signupFormLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="signupFormLabel">User Signup</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="">
+                    <div class="">
+                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-registration/draw1.webp"
+                            class="img-fluid" alt="Sample image">
+                    </div>
+                    <div class="mt-4">
+                        <form class="mx-1 mx-md-4" method="post" id="signup-form">
+                            <div class="invalid-feedback errorClass ms-5"></div>
+                            <div class="d-flex flex-row align-items-center mb-4">
+                                <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                                <div class="form-outline flex-fill mb-0">
+                                    <input type="text" id="username" class="form-control" name="username"
+                                        placeholder="Username" />
+                                </div>
+                            </div>
+
+                            <div class="invalid-feedback errorClass ms-5">
+
+                            </div>
+                            <div class="d-flex flex-row align-items-center mb-4">
+                                <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                                <div class="form-outline flex-fill mb-0">
+                                    <input type="email" id="emailId" class="form-control" name="email"
+                                        placeholder="Email" />
+                                </div>
+                            </div>
+
+                            <div class="invalid-feedback errorClass ms-5"></div>
+                            <div class="d-flex flex-row align-items-center mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" fill="currentColor"
+                                    class="bi bi-telephone-fill" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                        d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
+                                </svg>
+                                <div class="form-outline flex-fill ms-4 mb-0">
+                                    <input type="text" id="phoneNUmber" class="form-control" name="phone_number"
+                                        placeholder="Mobile Number" />
+                                </div>
+                            </div>
+
+                            <div class="invalid-feedback errorClass ms-5"></div>
+                            <div class="d-flex flex-row align-items-center mb-4">
+                                <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                                <div class="form-outline flex-fill mb-0">
+                                    <input type="password" id="password" class="form-control" name="password"
+                                        placeholder="Password" />
+                                </div>
+                            </div>
+
+                            <div class="invalid-feedback errorClass ms-5"></div>
+                            <div class="d-flex flex-row align-items-center mb-4">
+                                <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
+                                <div class="form-outline flex-fill mb-0">
+                                    <input type="referal_code" id="referal_code" class="form-control"
+                                        name="referal_code" placeholder="Referal Code(optional)" />
+                                </div>
+                            </div>
+
+                            <div class="ms-5">
+                                Already have an account ?
+                                <button type="button" class="bg-body border-0" data-bs-toggle="modal"
+                                    data-bs-target="#signinForm">
+                                    Sign in
+                                </button>
+                            </div>
+                            <div class="d-flex justify-content-center mx-4 mt-3 mb-3 mb-lg-4">
+                                <button type="submit" class="btn btn-primary btn-lg">Register</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{/if}}

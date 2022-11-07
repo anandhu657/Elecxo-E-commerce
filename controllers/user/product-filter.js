@@ -1,0 +1,3 @@
+exports.getFilterProducts = (req, res) => {
+    
+}

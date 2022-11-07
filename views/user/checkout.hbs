@@ -1,0 +1,410 @@
+<div class="container mt-3" style="height: auto;">
+    <div class="row">
+        <div class="col-md-4 order-md-2 mb-4 position-relative">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-muted">Your cart</span>
+                <span class="badge badge-secondary badge-pill">3</span>
+            </h4>
+            {{#if total}}
+            <ul class="list-group mb-3 sticky-top">
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                        <h6 class="my-0">Subtotal</h6>
+                        <small class="text-muted">Brief description</small>
+                    </div>
+                    <span class="text-muted">₹{{total}}</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                        <h6 class="my-0">Tax</h6>
+                        <small class="text-muted">Brief description</small>
+                    </div>
+                    <span class="text-muted">₹0</span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                        <h6 class="my-0">Delivery Fee</h6>
+                        <small class="text-muted">Brief description</small>
+                    </div>
+                    <span class="text-muted">Free</span>
+                </li>
+
+                <li class="list-group-item d-flex justify-content-between lh-condensed">
+                    <div>
+                        <h6 class="my-0">Coupon Offer</h6>
+                        <small class="text-muted">Brief description</small>
+                    </div>
+                    <span class="text-muted">₹<span id="coupon-offer">0</span></span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between mt-3">
+                    <span>Total (USD)</span>
+                    <strong>₹<span id="total-price">{{total}}</span></strong>
+                </li>
+                <form class="card p-2 mt-5" id="coupon-form" method="post">
+                    <small id="coupon-invalid" style="color: red;"></small>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Promo code" name="redeem">
+                        <button type="submit" class="btn btn-primary">Redeem</button>
+                    </div>
+                </form>
+            </ul>
+            {{/if}}
+        </div>
+
+        <div class="col">
+            <p class="lead">
+                Choose your Address
+            </p>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Add Address
+            </button>
+
+            <div class="">
+                <form id="address-submit" method="post">
+                    {{#each addresses}}
+                    <label class="mt-3 shadow">
+                        <input type="radio" onchange="pickAddress('{{this.address._id}}')" name="addressId"
+                            class="card-input-element d-none" value="" id="demo1">
+                        <div
+                            class="card h-50 card-body bg-light d-flex flex-row justify-content-between align-items-center">
+                            <div>
+                                <p class="h6">{{this.address.firstname}} {{this.address.lastname}},
+                                    {{this.email}}, {{this.address.address}}</p>
+                                <p class="">{{this.address.landmark}}, {{this.address.phonenumber}},
+                                    {{this.address.pincode}},
+                                    {{this.address.state}},
+                                    {{this.address.country}}</p>
+                                {{!-- <a class="text-decoration-none me-3" style="color: blue;"
+                                    onclick="editAddress('{{this.address._id}}')">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a class="text-decoration-none" onclick="deleteAddress('{{this.address._id}}')"
+                                    style="color: red;">
+                                    <i class="fas fa-trash"></i>
+                                </a> --}}
+                            </div>
+                        </div>
+                    </label>
+                    {{/each}}
+                    <div class="row mt-5">
+                        <div class="col-md-6 mb-3">
+                            <input type="text" class="form-control bg-light" id="firstNameField"
+                                placeholder="First name" name="firstname" value="" required="">
+                            <div class="invalid-feedback"> Valid first name is required. </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <input type="text" class="form-control bg-light" id="lastNameField" placeholder="Last name"
+                                name="lastname" value="" required="">
+                            <div class="invalid-feedback"> Valid last name is required. </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <input type="email" class="form-control bg-light" id="email"
+                            placeholder="Enter email (optional)" name="email">
+                        <div class="invalid-feedback"> Please enter a valid email address for shipping
+                            updates. </div>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control bg-light" id="addressField" placeholder="Address"
+                            name="address" value="" required="">
+                        <div class="invalid-feedback"> Please enter your shipping address. </div>
+                    </div>
+                    <div class="mb-3">
+                        <input type="text" class="form-control bg-light" id="landmarkField" placeholder="Landmark"
+                            name="landmark" value="" required="">
+                        <div class="invalid-feedback"> Please enter your landmark. </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <input type="text" class="form-control bg-light" id="phonenumberField" name="phonenumber"
+                                placeholder="Phone Number" value="" required="">
+                            <div class="invalid-feedback"> Valid Phone Number is required. </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <input type="text" class="form-control bg-light" id="alternate_phone"
+                                placeholder="Alternate phone number(Optional)" name="altnumberField">
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5 mb-3">
+                            <label for="country">Country</label>
+                            <select class="form-control custom-select d-block w-100 country" id="countryField"
+                                name="country" required="">
+                                <option selected="true" disabled="disabled" value="country">
+                                </option>
+                                <option>India</option>
+                                <option>United States</option>
+                            </select>
+                            <div class="invalid-feedback"> Please select a valid country. </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="state">State</label>
+                            <select class="form-control custom-select d-block w-100 state" id="stateField" name="state"
+                                required="">
+                                <option selected="true" disabled="disabled" value="state"></option>
+                                <option>Kerala</option>
+                                <option>Tamilnadu</option>
+                                <option>Karnataka</option>
+                                <option>Delhi</option>
+                                <option>Uttar Pradhesh</option>
+                            </select>
+                            <div class="invalid-feedback"> Please provide a valid state. </div>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label for="zip">Pincode</label>
+                            <input type="text" class="form-control" id="zipField" placeholder="" name="pincode" value=""
+                                required="">
+                            <div class="invalid-feedback"> Pincode required. </div>
+                        </div>
+                    </div>
+
+                    <hr class="mb-4">
+                    <input type="hidden" name="userId" value="{{user._id}}">
+                    <input type="hidden" name="addressId" value="">
+                    <h5 class="mt-4">Payment Method</h5>
+                    <div class="d-flex my-3">
+                        <div class="custom-control custom-radio">
+                            <input id="COD" name="paymentMethod" value="cod" type="radio" class="custom-control-input"
+                                checked="" required="">
+                            <label class="custom-control-label" for="credit">COD</label>
+                        </div>
+                        <div class="custom-control custom-radio ms-3">
+                            <input id="razorpay" name="paymentMethod" value="razorpay" type="radio"
+                                class="custom-control-input" required="">
+                            <label class="custom-control-label" for="debit">Razorpay Payment</label>
+                        </div>
+                        <div class="custom-control custom-radio ms-3">
+                            <input id="paypal" name="paymentMethod" value="paypal" type="radio"
+                                class="custom-control-input" required="">
+                            <label class="custom-control-label" for="debit">Paypal Payment</label>
+                        </div>
+                    </div>
+                    <input type="hidden" value="{{total}}" name="total" id="totalAmount">
+                    {{#if user.wallet}}
+                    <div class="form-check mb-3">
+                        <input class="form-check-input" type="checkbox" value="checked" name="wallet"
+                            id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Use your wallet amount ₹{{user.wallet}} to reduce totalAmount
+                        </label>
+                    </div>
+                    {{/if}}
+                    <div class="d-flex">
+                        <button type="reset" class="btn btn-danger w-50 mb-5">Reset</button>
+                        <button type="submit" class="btn btn-primary w-50 ms-3 mb-5">Checkout</button>
+                    </div>
+                </form>
+            </div>
+            <!-- Button trigger modal -->
+
+            <!-- Modal -->
+            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="order-md-1">
+                                <h4 class="mb-3">Billing address</h4>
+
+                                <form class="needs-validation" method="post" id="checkout-form" novalidate="">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <input type="text" class="form-control bg-light" id="firstName"
+                                                placeholder="First name" name="firstname" value="" required="">
+                                            <div class="invalid-feedback"> Valid first name is required. </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <input type="text" class="form-control bg-light" id="lastName"
+                                                placeholder="Last name" name="lastname" value="" required="">
+                                            <div class="invalid-feedback"> Valid last name is required. </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <input type="email" class="form-control bg-light" id="email"
+                                            placeholder="Enter email (optional)" name="email">
+                                        <div class="invalid-feedback"> Please enter a valid email address for shipping
+                                            updates. </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="text" class="form-control bg-light" id="address"
+                                            placeholder="Address" name="address" value="" required="">
+                                        <div class="invalid-feedback"> Please enter your shipping address. </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="text" class="form-control bg-light" id="landmark"
+                                            placeholder="Landmark" name="landmark" value="" required="">
+                                        <div class="invalid-feedback"> Please enter your landmark. </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <input type="text" class="form-control bg-light" id="phonenumber"
+                                                name="phonenumber" placeholder="Phone Number" value="" required="">
+                                            <div class="invalid-feedback"> Valid Phone Number is required. </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <input type="text" class="form-control bg-light" id="alternate_phone"
+                                                placeholder="Alternate phone number(Optional)" name="altnumber">
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-5 mb-3">
+                                            <label for="country">Country</label>
+                                            <select class="form-control custom-select d-block w-100" id="country"
+                                                name="country" required="">
+                                                <option selected="true" disabled="disabled" value="">
+                                                </option>
+                                                <option>India</option>
+                                                <option>United States</option>
+                                            </select>
+                                            <div class="invalid-feedback"> Please select a valid country. </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="state">State</label>
+                                            <select class="form-control custom-select d-block w-100" id="state"
+                                                name="state" required="">
+                                                <option selected="true" disabled="disabled" value=""></option>
+                                                <option>Kerala</option>
+                                                <option>Tamilnadu</option>
+                                                <option>Karnataka</option>
+                                                <option>Delhi</option>
+                                                <option>Uttar Pradhesh</option>
+                                            </select>
+                                            <div class="invalid-feedback"> Please provide a valid state. </div>
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <label for="zip">Pincode</label>
+                                            <input type="text" class="form-control" id="zip" placeholder=""
+                                                name="pincode" value="" required="">
+                                            <div class="invalid-feedback"> Pincode required. </div>
+                                        </div>
+                                    </div>
+
+                                    <hr class="mb-4">
+                                    <input type="hidden" name="userId" value="{{user._id}}">
+                                    <button class="btn btn-primary btn-lg btn-block w-100" type="submit">Add
+                                        address</button>
+                                </form>
+                            </div>
+                        </div>
+                        {{!-- <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Understood</button>
+                        </div> --}}
+                    </div>
+                </div>
+            </div>
+
+
+            {{!-- Edit Address --}}
+            <div class="modal fade" id="staticBackdrop1" data-bs-backdrop="static" data-bs-keyboard="false"
+                tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="order-md-1">
+                                <h4 class="mb-3">Billing address</h4>
+
+                                <form class="needs-validation" method="post" id="address-edit-form" novalidate="">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <input type="text" class="form-control bg-light" id="editfirstName"
+                                                placeholder="First name" name="editfirstname" value="" required="">
+                                            <div class="invalid-feedback"> Valid first name is required. </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <input type="text" class="form-control bg-light" id="editlastName"
+                                                placeholder="Last name" name="editlastname" value="" required="">
+                                            <div class="invalid-feedback"> Valid last name is required. </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <input type="email" class="form-control bg-light" id="email"
+                                            placeholder="Enter email (optional)" name="editemail">
+                                        <div class="invalid-feedback"> Please enter a valid email address for shipping
+                                            updates. </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="text" class="form-control bg-light" id="address"
+                                            placeholder="Address" name="editaddress" value="" required="">
+                                        <div class="invalid-feedback"> Please enter your shipping address. </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="text" class="form-control bg-light" id="landmark"
+                                            placeholder="Landmark" name="editlandmark" value="" required="">
+                                        <div class="invalid-feedback"> Please enter your landmark. </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <input type="text" class="form-control bg-light" id="phonenumber"
+                                                name="editphonenumber" placeholder="Phone Number" value="" required="">
+                                            <div class="invalid-feedback"> Valid Phone Number is required. </div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <input type="text" class="form-control bg-light" id="alternate_phone"
+                                                placeholder="Alternate phone number(Optional)" name="editaltnumber">
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-5 mb-3">
+                                            <label for="country">Country</label>
+                                            <select class="form-control custom-select d-block w-100 country"
+                                                id="editcountry" name="editcountry" required="">
+                                                <option selected="true" disabled="disabled" value="country">
+                                                </option>
+                                                <option>India</option>
+                                                <option>United States</option>
+                                            </select>
+                                            <div class="invalid-feedback"> Please select a valid country. </div>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="state">State</label>
+                                            <select class="form-control custom-select d-block w-100 state"
+                                                id="editstate" name="editstate" required="">
+                                                <option selected="true" disabled="disabled" value="state"></option>
+                                                <option>Kerala</option>
+                                                <option>Tamilnadu</option>
+                                                <option>Karnataka</option>
+                                                <option>Delhi</option>
+                                                <option>Uttar Pradhesh</option>
+                                            </select>
+                                            <div class="invalid-feedback"> Please provide a valid state. </div>
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <label for="zip">Pincode</label>
+                                            <input type="text" class="form-control" id="zip" placeholder=""
+                                                name="editpincode" value="" required="">
+                                            <div class="invalid-feedback"> Pincode required. </div>
+                                        </div>
+                                    </div>
+
+                                    <hr class="mb-4">
+                                    <input type="hidden" name="userId" value="{{user._id}}">
+                                    <input type="hidden" name="addressId" value="">
+                                    <button class="btn btn-primary btn-lg btn-block w-50" type="submit">Edit
+                                        address</button>
+                                    <button type="reset" class="btn btn-danger">Reset</button>
+                                </form>
+                            </div>
+                        </div>
+                        {{!-- <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Understood</button>
+                        </div> --}}
+                    </div>
+                </div>
+            </div>
+            {{!-- Edit address --}}
+        </div>
+    </div>
