@@ -297,29 +297,32 @@ function addToWishlist(proId) {
         url: '/add-to-wishlist/' + proId,
         method: 'get',
         success: (response) => {
-            if (response.status) {
-                document.getElementById('add' + proId).classList.add("d-none")
-                // $('#add'+proId).hide()
-                // $('#remove'+proId).show()
-                document.getElementById('remove' + proId).classList.remove("d-none")
-
-                document.getElementById('success-text').innerHTML = "Product added to wishlist"
-                document.getElementById('success').classList.remove("d-none");
-                setTimeout(function () {
-                    document.getElementById('success').classList.add("d-none");
-                }, 2000);
+            if (response.user) {
+                if (response.status) {
+                    document.getElementById('success-text').innerHTML = "Product added to wishlist"
+                    document.getElementById('success').classList.remove("d-none");
+                    setTimeout(function () {
+                        document.getElementById('success').classList.add("d-none");
+                    }, 2000);
+                    document.getElementById('add' + proId).classList.add("d-none")
+                    // $('#add'+proId).hide()
+                    // $('#remove'+proId).show()
+                    document.getElementById('remove' + proId).classList.remove("d-none")
+                } else {
+                    document.getElementById('success-text').innerHTML = "Product removed to wishlist"
+                    document.getElementById('success').classList.remove("d-none");
+                    setTimeout(function () {
+                        document.getElementById('success').classList.add("d-none");
+                    }, 2000);
+                    document.getElementById('remove' + proId).classList.add("d-none")
+                    document.getElementById('add' + proId).classList.remove("d-none")
+                    // $('#remove'+proId).hide()
+                    // $('#add'+proId).show()
+                }
             } else {
-                document.getElementById('remove' + proId).classList.add("d-none")
-                document.getElementById('add' + proId).classList.remove("d-none")
-                // $('#remove'+proId).hide()
-                // $('#add'+proId).show()
 
+                $('#signinForm').modal('show');
 
-                document.getElementById('success-text').innerHTML = "Product removed to wishlist"
-                document.getElementById('success').classList.remove("d-none");
-                setTimeout(function () {
-                    document.getElementById('success').classList.add("d-none");
-                }, 2000);
             }
 
         }
@@ -700,6 +703,8 @@ function histogram(days, buttonId) {
 
                 document.getElementById('totalOrders').innerHTML = totalOrder
                 document.getElementById('totalAmount').innerHTML = response.totalAmount
+                document.getElementById('customers').innerHTML = response.users
+                document.getElementById('deliveredOrders').innerHTML=response.deliveredOrders
 
                 var xValues = ["Delivered", "Shipped", "Placed", "Pending", "Canceled"];
                 var yValues = [response.deliveredOrders, response.shippedOrders, response.placedOrders, response.pendingOrders, response.canceledOrders];
@@ -1423,7 +1428,7 @@ function deleteCoupon(couponId) {
 
 // pagination
 $(document).ready(function () {
-    $('#myTable').DataTable();
+    $('#myDataTable').DataTable();
 });
 
 function pickAddress(addressId) {

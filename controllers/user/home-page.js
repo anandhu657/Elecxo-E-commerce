@@ -14,7 +14,7 @@ exports.getHomePage = async (req, res) => {
     let category = await homePageHelper.getCategory();
     let banner = await bannerHelper.getBanner();
     console.log(banner);
-    homePageHelper.getProduct().then((products) => {
+    homePageHelper.getNewProduct().then((newProducts) => {
         // products.forEach(product => {
         //     product.totalPrice = product.price
         //     if (product.categoryOffer?.percentage > product.productOffer?.percentage) {
@@ -46,7 +46,8 @@ exports.getHomePage = async (req, res) => {
         //         }
         //     })
         // });
-
-        res.render('user/landing-page', { products, banner, cartCount, category, user: req.session.user, logout: !req.session.loggedIn })
+        homePageHelper.getOfferProducts().then((offerProducts) => {
+            res.render('user/landing-page', { newProducts, offerProducts, banner, cartCount, category, user: req.session.user, logout: !req.session.loggedIn })
+        })
     })
 }

@@ -1,7 +1,7 @@
 const db = require('../../config/connection');
 const collection = require('../../config/collection');
 
-exports.getProduct = () => {
+exports.getNewProduct = () => {
     return new Promise(async (resolve, reject) => {
         // let products = db.get().collection(collection.PRODUCT_COLLECTION).aggregate(
         //     [
@@ -42,9 +42,23 @@ exports.getProduct = () => {
         //         }
         //     ]
         // ).toArray()
-        let products = await db.get().collection(collection.PRODUCT_COLLECTION).find().toArray()
+        let products = await db.get().collection(collection.PRODUCT_COLLECTION).find().limit(4).toArray()
         console.log(products);
         resolve(products)
+    })
+}
+
+exports.getOfferProducts = () => {
+    return new Promise(async (resolve, reject) => {
+        let offerProducts = await db.get().collection(collection.PRODUCT_COLLECTION).find(
+            {
+                $or: [
+                    { categoryOffer: { $ne: 0 } },
+                    { productOffer: { $ne: 0 } }
+                ]
+            }
+        ).limit(4).toArray()
+        resolve(offerProducts)
     })
 }
 

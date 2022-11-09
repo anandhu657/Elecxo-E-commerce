@@ -1,128 +1,136 @@
-<div class="container">
-    <div class="position-fixed w-25 d-none" id="success"
-        style="left:530px; background-color: black; border-radius:10px; z-index:2000;">
-        <p id="success-text" class="text-center mt-3" style="color: white;">Product Added to Cart</p>
-    </div>
-
-    <div class="d-flex justify-content-between mb-5">
-        <div>
-            <div>
-                <div class="col-md-4 px-0" id="img-container" style="width: 400px;">
-                    <img id="image" src="{{products.images.[0]}}" class="img-fluid">
+<section class="" style="padding-top: 150px;">
+    <div class="container">
+        <div class="position-fixed w-25 d-none" id="success"
+            style="left:530px; background-color: black; border-radius:10px; z-index:2000;">
+            <p id="success-text" class="text-center mt-3" style="color: white;">Product Added to Cart</p>
+        </div>
+        <div class="row mb-5">
+            <div class="col-lg-6">
+                <!-- PRODUCT SLIDER-->
+                <div class="row m-sm-0">
+                    <div class="col-sm-2 p-sm-0 order-2 order-sm-1 mt-2 mt-sm-0 px-xl-2">
+                        <div class="swiper product-slider-thumbs">
+                            <div class="swiper-wrapper d-md-none d-lg-block">
+                                <div class=" h-auto mb-3">
+                                    <button class="border-0" onclick="changeImage('img0')">
+                                        <img class="w-100" id="img0" src="{{products.images.[0]}}" alt="...">
+                                    </button>
+                                </div>
+                                <div class=" h-auto mb-3">
+                                    <button class="border-0" onclick="changeImage('img1')">
+                                        <img class="w-100" id="img1" src="{{products.images.[1]}}" alt="...">
+                                    </button>
+                                </div>
+                                <div class=" h-auto mb-3">
+                                    <button class="border-0" onclick="changeImage('img2')">
+                                        <img class="w-100" id="img2" src="{{products.images.[2]}}" alt="...">
+                                    </button>
+                                </div>
+                                <div class=" h-auto mb-3" 3>
+                                    <button class="border-0" onclick="changeImage('img3')">
+                                        <img class="w-100" id="img3" src="{{products.images.[3]}}" alt="...">
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-10 order-1 order-sm-2">
+                        {{!-- <div class="swiper product-slider">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide h-auto"><a class="glightbox product-view"
+                                        href="img/product-detail-1.jpg" data-gallery="gallery2"
+                                        data-glightbox="Product item 1"><img class="img-fluid"
+                                            src="{{products.images.[0]}}" alt="..."></a></div>
+                                <div class="swiper-slide h-auto"><a class="glightbox product-view"
+                                        href="img/product-detail-2.jpg" data-gallery="gallery2"
+                                        data-glightbox="Product item 2"><img class="img-fluid"
+                                            src="img/product-detail-2.jpg" alt="..."></a></div>
+                                <div class="swiper-slide h-auto"><a class="glightbox product-view"
+                                        href="img/product-detail-3.jpg" data-gallery="gallery2"
+                                        data-glightbox="Product item 3"><img class="img-fluid"
+                                            src="img/product-detail-3.jpg" alt="..."></a></div>
+                                <div class="swiper-slide h-auto"><a class="glightbox product-view"
+                                        href="img/product-detail-4.jpg" data-gallery="gallery2"
+                                        data-glightbox="Product item 4"><img class="img-fluid"
+                                            src="img/product-detail-4.jpg" alt="..."></a></div>
+                            </div>
+                        </div> --}}
+                        <div id="img-container">
+                            <img class="w-100" id="image" src="{{products.images.[0]}}" alt="...">
+                        </div>
+                    </div>
                 </div>
-
             </div>
-            <div class="d-flex mt-3">
-                <div class="col-md-2 me-3 px-0 ">
-                    <button class="border-0" onclick="changeImage('img0')">
-                        <img src="{{products.images.[0]}}" class="img-fluid" id="img0"
-                            width="100">
-                    </button>
+            <!-- PRODUCT DETAILS-->
+            <div class="col-lg-6">
+                <h1>{{products.product_name}}</h1>
+                {{#ifNE products.offerPrice products.price}}
+                <p class="text-muted lead d-inline">₹<del>{{products.price}}</del></p>
+                {{#ifGT products.categoryOffer products.productOffer}}
+                <span class="ms-3" style="color: green;">({{products.categoryOffer}}% Offer)</span>
+                {{else}}
+                <span class="ms-3" style="color: green;">({{products.categoryOffer}}% Offer)</span>
+                {{/ifGT}}
+
+                <p class="text-muted lead"><b>₹{{products.offerPrice}}</b></p>
+                {{else}}
+                <p class="text-muted lead"><b>₹{{products.offerPrice}}</b></p>
+                {{/ifNE}}
+                <p class="text-sm mb-4">{{products.description}}</p>
+                <div class="row align-items-stretch mb-4">
+                    <div class="col-sm-3 pl-sm-0">
+                        <a class="btn btn-dark btn-sm btn-block h-100 d-flex align-items-center justify-content-center px-0"
+                            onclick="addToCart('{{products._id}}')">Add to cart</a>
+                    </div>
                 </div>
-                <div class="col-md-2 me-3 px-0 ">
-                    <button class="border-0" onclick="changeImage('img1')">
-                        <img src="{{products.images.[1]}}" class="img-fluid" id="img1"
-                            width="100">
-                    </button>
-                </div>
-                <div class="col-md-2 me-3 px-0">
-                    <button class="border-0" onclick="changeImage('img2')">
-                        <img src="{{products.images.[2]}}" class="img-fluid" id="img2"
-                            width="100">
-                    </button>
-                </div>
-                <div class="col-md-2 me-3 px-0">
-                    <button class="border-0" onclick="changeImage('img3')">
-                        <img src="{{products.images.[3]}}" class="img-fluid" id="img3"
-                            width="100">
-                    </button>
-                </div>
+                <a class="text-dark p-0 mb-4 d-inline-block" style="cursor: pointer;"
+                    onclick="addToWishlist('{{products._id}}')">
+                    <i class="far fa-heart me-2"></i>Add to wish list
+                </a>
+                <br>
+                <ul class="list-unstyled small d-inline-block">
+
+                    <li class="px-3 py-2 mb-1 bg-white text-muted"><strong
+                            class="text-uppercase text-dark">Category:</strong><a class="reset-anchor ms-2"
+                            href="/search?search={{products.category}}">{{products.category}}</a></li>
+
+                </ul>
             </div>
         </div>
-        <div class="my-5">
-            <div class="mb-3">
-                <div class="text-decor h2">{{products.product_name}}</div>
-            </div>
-            {{#ifNE products.offerPrice products.price}}
-            <div class="mb-3">
-                <div class="text-decor h3">₹<del>{{products.price}}</del>
-                    {{#ifGT products.categoryOffer products.productOffer}}
-                    <span class="ms-3" style="color: green;">({{products.categoryOffer}}% Offer)</span>
-                    {{else}}
-                    <span class="ms-3" style="color: green;">({{products.categoryOffer}}% Offer)</span>
-                    {{/ifGT}}
-                </div>
-            </div>
+        <!-- DETAILS TABS-->
 
-            <div class="mb-3">
-                <div class="text-decor h3">₹{{products.offerPrice}}
-                </div>
-            </div>
-            {{else}}
-            <div class="mb-3">
-                <div class="text-decor h3">₹{{products.offerPrice}}
-                </div>
-            </div>
-            {{/ifNE}}
-            {{!-- <div class="rating">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                    class="bi bi-star-fill" viewBox="0 0 16 16">
-                    <path
-                        d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                </svg>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                    class="bi bi-star-fill" viewBox="0 0 16 16">
-                    <path
-                        d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                </svg>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                    class="bi bi-star-fill" viewBox="0 0 16 16">
-                    <path
-                        d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                </svg>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                    class="bi bi-star-fill" viewBox="0 0 16 16">
-                    <path
-                        d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                </svg>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star"
-                    viewBox="0 0 16 16">
-                    <path
-                        d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
-                </svg>
-            </div> --}}
-            <div class="my-3" style="width: 30rem;">
-                <div class="">{{products.description}}</div>
-            </div>
-            <div class="col-sm-3 mb-4 invisible">
-                <span class="text-decor">Qty:</span>
-                <div class="input-group">
 
-                    <span class="input-group-prepend">
-                        <button type="button" class="btn btn-outline-secondary btn-number" disabled="disabled"
-                            data-type="minus" data-field="quant[1]">
-                            <span class="fa fa-minus"></span>
-                        </button>
-                    </span>
-                    <input type="text" name="quant[1]" class="form-control input-number" value="1" min="1" max="10">
-                    <span class="input-group-append">
-                        <button type="button" class="btn btn-outline-secondary btn-number" data-type="plus"
-                            data-field="quant[1]">
-                            <span class="fa fa-plus"></span>
-                        </button>
-                    </span>
+        <!-- RELATED PRODUCTS-->
+        <h2 class="h5 text-uppercase mb-4">Related products</h2>
+        <div class="row">
+            <!-- PRODUCT-->
+            {{#each suggesstions}}
+            <div class="col-lg-3 col-sm-6">
+                <div class="product text-center skel-loader">
+                    <div class="d-block mb-3 position-relative">
+                        <a class="d-block" href="/product-view/{{this._id}}">
+                            <img class="img-fluid w-100" src="{{this.images.[0]}}" alt="..."></a>
+                        <div class="product-overlay">
+                            <ul class="mb-0 list-inline">
+                                <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark"
+                                        onclick="addToWishlist('{{this._id}}')"><i class="far fa-heart"></i></a>
+                                </li>
+                                <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark"
+                                        onclick="addToCart('{{this._id}}')">Add to
+                                        cart</a></li>
+                                <li class="list-inline-item mr-0"><a class="btn btn-sm btn-outline-dark"
+                                        href="/product-view/{{this._id}}" data-bs-toggle="modal"><i
+                                            class="fas fa-expand"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <h6> <a class="reset-anchor" href="/product-view/{{this._id}}">{{this.product_name}}</a></h6>
+                    <p class="small text-muted">₹{{this.offerPrice}}</p>
                 </div>
             </div>
-            <div>
-                <div class="d-flex">
-                    <button onclick="addToWishlist('{{products._id}}')" type="button"
-                        class="btn btn-outline-dark btn-lg me-3" style="border-radius: 0;">Add to
-                        wishlist</button>
-                    <button type="button" class="btn btn-dark btn-lg" style="border-radius: 0;"
-                        onclick="addToCart('{{products._id}}')">Add to Cart</button>
-                </div>
-            </div>
+            {{/each}}
+            <!-- PRODUCT-->
         </div>
     </div>
-    <hr>
-</div>
+</section>

@@ -144,6 +144,7 @@
                         <th>Coupons</th>
                         <th>offer %</th>
                         <th>minimum Price</th>
+                        <th>Maximum Price</th>
                         <th>Expiry Date</th>
                         <th>
 
@@ -156,6 +157,7 @@
                         <td>{{this.coupon}}</td>
                         <td>{{this.percentage}}</td>
                         <td>{{this.minimumPrice}}</td>
+                        <td>{{this.maximumPrice}}</td>
                         <td>{{this.expirydate}}</td>
                         <td style="font-size: 16px;">
                             {{!-- <a class="me-3" onclick="editCategoryOffer()"><i class="fas fa-pen-square"
@@ -196,6 +198,12 @@
                                         placeholder="Enter minimum price for this coupon" name="minimumPrice" value=""
                                         required="">
                                     <div class="invalid-feedback"> Please enter minimum price. </div>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="text" class="form-control bg-light" id="coupon-maximumOffer"
+                                        placeholder="Enter maximum price for this coupon" name="maximumPrice" value=""
+                                        required="">
+                                    <div class="invalid-feedback"> Please enter maximum price. </div>
                                 </div>
                                 <div class="mb-3">
                                     <label for="coupon-expirydate">Expiry Date</label>

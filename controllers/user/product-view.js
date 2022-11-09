@@ -8,7 +8,9 @@ exports.getProductView = async (req, res) => {
         req.session.cartCount = cartCount
     }
     productViewHelper.getProductView(req.params.id).then(async (products) => {
-        res.render('user/product-view', { products, cartCount, user: req.session.user, logout: !req.session.loggedIn })
+        productViewHelper.getproductSuggesstion(products.category).then((suggesstions) => {
+            res.render('user/product-view', { products, suggesstions, cartCount, user: req.session.user, logout: !req.session.loggedIn })
+        })
     })
 }
 

@@ -11,3 +11,10 @@ exports.getProductView = (proId) => {
         })
     })
 }
+
+exports.getproductSuggesstion = (category) => {
+    return new Promise((resolve, reject) => {
+        let suggesstions = db.get().collection(collection.PRODUCT_COLLECTION).find({ category: category }).toArray()
+        resolve(suggesstions)
+    })
+}

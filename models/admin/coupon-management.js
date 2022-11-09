@@ -12,6 +12,7 @@ exports.getCoupon = () => {
 exports.addCoupon = (couponDetails) => {
     couponDetails.percentage = Number(couponDetails.percentage)
     couponDetails.minimumPrice = Number(couponDetails.minimumPrice)
+    couponDetails.maximumPrice = Number(couponDetails.maximumPrice)
     return new Promise((resolve, reject) => {
         db.get().collection(collection.COUPON_COLLECTION).insertOne(couponDetails).then(() => {
             resolve()

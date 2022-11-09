@@ -212,7 +212,7 @@
         </div>
     </div>
 </div>
-<div class="container">
+<div class="container-fluid pt-4">
     <div class="position-fixed w-25 d-none" id="success"
         style="left:530px; background-color: black; border-radius:10px; z-index:2000;">
         <p id="success-text" class="text-center mt-3" style="color: white;">Product Added to Cart</p>
@@ -256,13 +256,71 @@
         </div>
     </section> --}}
     <!-- TRENDING PRODUCTS-->
-    <section class="py-5">
+    <section class="container h-auto py-5">
         <header>
             <p class="small text-muted  small text-uppercase mb-1">Made the hard way</p>
             <h2 class="h5 text-uppercase mb-4">Top trending products</h2>
         </header>
         <div class="row">
-            {{#each products}}
+            {{#each newProducts}}
+            <!-- PRODUCT-->
+            <div class="col-xl-3 col-lg-4 col-sm-6 py-5">
+                <div class="product text-center">
+                    <div class="position-relative mb-3">
+
+                        <div class="badge text-white bg-"></div><a class="d-block" href="/product-view/{{this._id}}">
+                            <img class="img-fluid" src="{{this.images.[0]}}" alt="..." width="100"></a>
+                        <div class="product-overlay">
+                            <ul class="mb-0 list-inline">
+                                <li class="list-inline-item m-0 p-0">
+                                    <a class="btn btn-sm btn-outline-dark" onclick="addToWishlist('{{this._id}}')">
+                                        {{#if this.wishlist}}
+                                        <i id="remove{{this._id}}" class="fas fa-heart"></i>
+                                        <i id="add{{this._id}}" class="far fa-heart d-none"></i>
+                                        {{else}}
+                                        <i id="add{{this._id}}" class="far fa-heart "></i>
+                                        <i id="remove{{this._id}}" class="fas fa-heart d-none"></i>
+                                        {{/if}}
+                                    </a>
+                                </li>
+                                <li class="list-inline-item m-0 p-0">
+                                    <a class="btn btn-sm btn-dark" onclick="addToCart('{{this._id}}')">
+                                        Add to cart
+                                    </a>
+                                </li>
+                                <li class="list-inline-item me-0"><a class="btn btn-sm btn-outline-dark"
+                                        onclick="productModalView('{{this._id}}')"><i class="fas fa-expand"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <h6> <a class="reset-anchor text-truncate para"
+                            href="/product-view/{{this._id}}">{{this.product_name}}</a></h6>
+                    {{#ifNE this.offerPrice this.price}}
+                    <p class="small text-muted d-inline strike me-2">₹<del>{{this.price}}</del>
+                        {{#ifGT this.categoryOffer this.productOffer}}
+                        <span style="color: green;">({{this.categoryOffer}}%off)</span>
+                        {{else}}
+                        <span style="color: green;">({{this.productOffer}}%off)</span>
+                        {{/ifGT}}
+                    </p>
+                    <p class="small text-muted d-inline" style="font-weight: bold;">₹{{this.offerPrice}}</p>
+                    {{else}}
+                    <p class="small text-muted d-inline" style="font-weight: bold;">₹{{this.offerPrice}}</p>
+                    {{/ifNE}}
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </section>
+
+    <section class="container h-auto py-5">
+        <header>
+            <p class="small text-muted  small text-uppercase mb-1">Made the hard way</p>
+            <h2 class="h5 text-uppercase mb-4">Today Offer products</h2>
+        </header>
+        <div class="row">
+            {{#each offerProducts}}
             <!-- PRODUCT-->
             <div class="col-xl-3 col-lg-4 col-sm-6 py-5">
                 <div class="product text-center">
@@ -314,7 +372,7 @@
         </div>
     </section>
     <!-- SERVICES-->
-    <section class="py-5 bg-light">
+    <section class="row py-5 bg-light">
         <div class="">
             <div class="row text-center gy-3">
                 <div class="col-lg-4">
@@ -367,7 +425,7 @@
             </div>
         </div>
     </section>
-    <footer class=" bg-dark text-white">
+    <footer class="row bg-dark text-white">
         <div class="px-4 py-4">
             <div class="row py-5">
                 <div class="col-md-4 mb-3 mb-md-0">

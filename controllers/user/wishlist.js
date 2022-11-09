@@ -9,7 +9,7 @@ exports.getWishlist = (req, res) => {
 
 exports.addToWishlist = (req, res) => {
     wishlistHelper.addToWishlist(req.params.proId, req.session.user._id).then(() => {
-        res.json({ status: true })
+        res.json({ status: true, user: req.session.user })
     }).catch((response) => {
         res.json({ status: false })
     })

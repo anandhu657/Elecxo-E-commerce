@@ -1,10 +1,7 @@
 const productManagementHelper = require('../../models/admin/product-management')
 const categoryManagementHelper = require('../../models/admin/category-management')
-const mkdirp = require('mkdirp');
-const multer = require('multer')
+// const mkdirp = require('mkdirp');
 const cloudinary = require('../../utils/cloudinary');
-const { response } = require('../../app');
-const { url } = require('../../utils/cloudinary');
 
 exports.getProductDetails = (req, res) => {
     productManagementHelper.getProducts().then((response) => {
@@ -13,7 +10,7 @@ exports.getProductDetails = (req, res) => {
 }
 
 exports.deleteProductDetails = (req, res) => {
-    productManagementHelper.deleteProduct(req.params.id).then((response) => {
+    productManagementHelper.deleteProduct(req.params.id).then(() => {
         res.redirect('/admin/admin_panel/products')
     })
 }
@@ -44,9 +41,9 @@ exports.postAddProduct = async (req, res) => {
             const result = await cloudinaryImageUploadMethod(path);
             return result;
         })
-    );
+    )
     console.log(urls);
-    productManagementHelper.addProduct(req.body, urls, (id) => {
+    productManagementHelper.addProduct(req.body, urls, () => {
         res.redirect('/admin/admin_panel/products')
     })
 }

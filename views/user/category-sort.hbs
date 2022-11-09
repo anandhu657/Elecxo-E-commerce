@@ -1,5 +1,5 @@
 <section>
-    <div class="container mt-5">
+    <div class="container" style="padding-top: 100px;">
         <div class="position-fixed w-25 d-none" id="success"
             style="left:530px; background-color: black; border-radius:10px; z-index:2000;">
             <p id="success-text" class="text-center mt-3" style="color: white;">Product Added to Cart</p>
@@ -785,7 +785,7 @@
                                     <div class="col-md-3 mt-1">
                                         <a href="/product-view/{{this._id}}">
                                             <img class="img-fluid img-responsive rounded product-image"
-                                                src="/product-images/{{this._id}}/{{this._id}}_0.png">
+                                                src="{{this.images.[0]}}">
                                         </a>
                                     </div>
                                     <div class="col-md-6 mt-1">

@@ -118,7 +118,7 @@ exports.addProductOffer = async (productDetails) => {
     let offerPercentage = Number(productDetails.percentage)
     // let productCheck = await db.get().collection(collection.OFFER_COLLECTION).findOne({ product: objId(productDetails.product) })
     return new Promise(async (resolve, reject) => {
-        db.get().collection(collection.PRODUCT_COLLECTION).updateOne(
+        await db.get().collection(collection.PRODUCT_COLLECTION).updateOne(
             { _id: proId },
             {
                 $set:
@@ -132,7 +132,7 @@ exports.addProductOffer = async (productDetails) => {
         if (product.productOffer >= product.categoryOffer) {
             let temp = (product.price * product.productOffer) / 100
             let updatedOfferPrice = parseInt(product.price - temp)
-            db.get().collection(collection.PRODUCT_COLLECTION).updateOne(
+            await db.get().collection(collection.PRODUCT_COLLECTION).updateOne(
                 { _id: proId },
                 {
                     $set: {

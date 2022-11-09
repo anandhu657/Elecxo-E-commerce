@@ -5,7 +5,7 @@ exports.deliveredOrderList = (yy, mm) => {
     return new Promise(async (resolve, reject) => {
         let agg = [{
             $match: {
-                status: 'delivered'
+                'products.status': 'delivered'
             }
         }, {
             $unwind: {
@@ -13,10 +13,10 @@ exports.deliveredOrderList = (yy, mm) => {
             }
         }, {
             $project: {
-                totalAmount: 1,
+                totalAmount: '$products.price',
                 paymentMethod: 1,
                 statusUpdateDate: 1,
-                status: 1,
+                status: '$products.status',
             }
         }]
 

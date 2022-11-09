@@ -1,4 +1,4 @@
-<section>
+<section class="pt-5">
     <nav id="sidebarMenu" class="collapse d-lg-block sidebars collapse bg-white">
         <div class="position-sticky">
             <div class="list-group list-group-flush mt-3">
@@ -36,7 +36,7 @@
 </section>
 
 <section>
-    <div class="container" style="padding-left:200px;">
+    <div class="container pt-4" style="padding-left:200px;">
         <div class="position-fixed w-25 d-none" id="success"
             style="left:530px; top:100px; z-index:1000; background-color: black; border-radius:10px">
             <p id="success-text" class="text-center mt-3" style="color: white;">Product Added to Cart</p>
@@ -53,7 +53,7 @@
             <div class="d-flex card-font-size">
                 <a href="/product-view/{{this.product._id}}">
                     <img class="img-fluid ms-2 my-2"
-                        src="/product-images/{{this.product._id}}/{{this.product._id}}_0.png" alt="Card image cap"
+                        src="{{this.product.images.[0]}}" alt="Card image cap"
                         width="120">
                 </a>
                 <div class="card-body ms-5 w-50">
