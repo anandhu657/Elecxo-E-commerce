@@ -558,13 +558,13 @@ function verifyPayment(payment, order) {
 
 // image zoom
 
-var options = {
-    width: 400,
-    zoomWidth: 100,
-    offset: { vertical: 80, horizontal: 0 },
-    scale: 0.6,
-};
-new ImageZoom(document.getElementById("img-container"), options);
+// var options = {
+//     width: 400,
+//     zoomWidth: 100,
+//     offset: { vertical: 80, horizontal: 0 },
+//     scale: 0.6,
+// };
+// new ImageZoom(document.getElementById("img-container"), options);
 
 // imagezoom
 
@@ -844,6 +844,11 @@ function histogram(days, buttonId) {
 }
 
 
+$(document).ready(function () {
+    $(".block__pic").imagezoomsl({
+        zoomrange: [1, 1]
+    });
+});
 
 // order status
 function statusChange(proId, orderId) {
