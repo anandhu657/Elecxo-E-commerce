@@ -11,7 +11,7 @@ exports.salesReport = (days) => {
         let data = {};
 
         data.deliveredOrders = await db.get().collection(collection.ORDER_COLLECTION).find({ date: { $gte: startDate, $lte: endDate }, 'products.status': 'delivered' }).count()
-        data.shippedOrders = await db.get().collection(collection.ORDER_COLLECTION).find({ date: { $gte: startDate, $lte: endDate },' products.status': 'shipped' }).count()
+        data.shippedOrders = await db.get().collection(collection.ORDER_COLLECTION).find({ date: { $gte: startDate, $lte: endDate }, ' products.status': 'shipped' }).count()
         data.placedOrders = await db.get().collection(collection.ORDER_COLLECTION).find({ date: { $gte: startDate, $lte: endDate }, 'products.status': 'placed' }).count()
         data.pendingOrders = await db.get().collection(collection.ORDER_COLLECTION).find({ date: { $gte: startDate, $lte: endDate }, 'products.status': 'pending' }).count()
         data.canceledOrders = await db.get().collection(collection.ORDER_COLLECTION).find({ date: { $gte: startDate, $lte: endDate }, 'products.status': 'canceled' }).count()
@@ -34,7 +34,7 @@ exports.salesReport = (days) => {
             }
         ]).toArray()
         data.codTotal = codTotal?.[0]?.totalAmount
-        let onlineTotal = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+        let razorpayTotal = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
             {
                 $match: {
                     $and: [
@@ -44,11 +44,7 @@ exports.salesReport = (days) => {
                             },
                         },
                         {
-                            $or: [
-                                { paymentMethod: 'online' },
-                                { paymentMethod: 'razorpay' },
-                                { paymentMethod: 'paypal' },
-                            ]
+                            paymentMethod: 'razorpay'
                         }
                     ]
                 }
@@ -62,7 +58,34 @@ exports.salesReport = (days) => {
                 }
             }
         ]).toArray()
-        data.onlineTotal = onlineTotal?.[0]?.totalAmount
+        data.razorpayTotal = razorpayTotal?.[0]?.totalAmount
+
+        let paypalTotal = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
+            {
+                $match: {
+                    $and: [
+                        {
+                            date: {
+                                $gte: startDate, $lte: endDate
+                            },
+                        },
+                        {
+                            paymentMethod: 'paypal'
+                        }
+                    ]
+                }
+            },
+            {
+                $group: {
+                    _id: null,
+                    totalAmount: {
+                        $sum: "$totalAmount"
+                    }
+                }
+            }
+        ]).toArray()
+        data.paypalTotal = paypalTotal?.[0]?.totalAmount
+
         let totalAmount = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
             {
                 $match: {
@@ -80,7 +103,7 @@ exports.salesReport = (days) => {
                 }
             }
         ]).toArray()
-        data.totalAmount = totalAmount?.[0]?.totalAmount
+        data.totalAmount = totalAmount?.[0]?.totalAmount || 0
         let refundAmount = await db.get().collection(collection.ORDER_COLLECTION).aggregate([
             {
                 $match: {
@@ -100,6 +123,28 @@ exports.salesReport = (days) => {
             }
         ]).toArray()
         data.refundAmount = refundAmount?.[0]?.totalAmount
+
+        let categoryCount = await db.get().collection(collection.CATEGORIES_COLLECTION).aggregate(
+            [
+                {
+                    '$lookup': {
+                        'from': 'products',
+                        'localField': 'category',
+                        'foreignField': 'category',
+                        'as': 'result'
+                    }
+                }, {
+                    '$project': {
+                        'count': {
+                            '$size': '$result'
+                        },
+                        'category':1
+                    }
+                }
+            ]
+        ).toArray()
+        data.categoryCount = categoryCount
+
         data.users = await db.get().collection(collection.USER_COLLECTION).find({ date: { $gte: startDate, $lte: endDate } }).count()
         resolve(data)
     })

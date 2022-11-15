@@ -7,7 +7,6 @@ var db = require('./config/connection')
 var hbs = require('express-handlebars');
 var session = require('express-session')
 var Handlebars = require('handlebars');
-var flash = require('connect-flash');
 var bodyParser = require('body-parser')
 
 
@@ -47,17 +46,16 @@ Handlebars.registerHelper('ifDateCheck', function (arg1, options) {
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(cookieParser());
-app.use(session({ secret: "Key", cookie: { maxAge: 600000 } }));
+app.use(session({ secret: "Key", cookie: { maxAge: 864000000 } }));
 app.engine('hbs', hbs.engine({ extname: 'hbs', defaultLayout: 'layout', layoutsDir: __dirname + '/views/layout/', partialsDir: __dirname + '/views/partials/' }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use((req, res, next) => {
   res.set('Cache-Control', 'no-cache, private,no-store,must-revalidate,max-stale=0,pre-check=0')
   next()
 })
-app.use(flash());
 
 db.connect((err) => {
   if (err) {

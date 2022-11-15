@@ -704,7 +704,7 @@ function histogram(days, buttonId) {
                 document.getElementById('totalOrders').innerHTML = totalOrder
                 document.getElementById('totalAmount').innerHTML = response.totalAmount
                 document.getElementById('customers').innerHTML = response.users
-                document.getElementById('deliveredOrders').innerHTML=response.deliveredOrders
+                document.getElementById('deliveredOrders').innerHTML = response.deliveredOrders
 
                 var xValues = ["Delivered", "Shipped", "Placed", "Pending", "Canceled"];
                 var yValues = [response.deliveredOrders, response.shippedOrders, response.placedOrders, response.pendingOrders, response.canceledOrders];
@@ -728,8 +728,8 @@ function histogram(days, buttonId) {
                     }
                 });
 
-                var xValues = ["COD", "Online", "Total", "Refund"];
-                var yValues = [response.codTotal, response.onlineTotal, response.totalAmount, response.refundAmount];
+                var xValues = ["COD", "razorpay", "paypal", "Refund"];
+                var yValues = [response.codTotal, response.razorpayTotal, response.paypalTotal, response.refundAmount];
 
                 var barColors = [
                     "#b91d47",
@@ -756,6 +756,60 @@ function histogram(days, buttonId) {
                     }
                 });
 
+                let categoryCount = response.categoryCount
+                let count = []
+                let category = []
+                categoryCount.forEach(element => {
+                    count.push(element.count)
+                    category.push(element.category)
+                })
+              
+
+                new Chart(document.getElementById("bar-chart-horizontal"), {
+                    type: 'horizontalBar',
+
+                    data: {
+                        labels: category,
+                        datasets: [
+                            {
+                                label: "Category (numbers)",
+                                backgroundColor: ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#c45850", "#b91d47", "#2b5797"],
+                                data: count
+                            }
+                        ]
+                    },
+                    options: {
+                        legend: { display: false },
+                        title: {
+                            display: true,
+                            text: ''
+                        }
+                    }
+                });
+
+                new Chart(document.getElementById("bar-chart-grouped"), {
+                    type: 'bar',
+                    data: {
+                      labels: ["1900", "1950", "1999", "2050"],
+                      datasets: [
+                        {
+                          label: "Africa",
+                          backgroundColor: "#3e95cd",
+                          data: [133,221,783,2478]
+                        }, {
+                          label: "Europe",
+                          backgroundColor: "#8e5ea2",
+                          data: [408,547,675,734]
+                        }
+                      ]
+                    },
+                    options: {
+                      title: {
+                        display: true,
+                        text: 'Population growth (millions)'
+                      }
+                    }
+                });
 
 
                 // var xValues = [50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150];
