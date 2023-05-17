@@ -2,7 +2,7 @@ const categoryManagementHelper = require('../../models/admin/category-management
 
 exports.getCategoryDetails = (req, res) => {
     categoryManagementHelper.getCategories().then((response) => {
-        res.render('admin/category-management', { response, admin: true, messages: req.flash('msg') })
+        res.render('admin/category-management', { response, admin: true})
     })
 }
 
